@@ -1,5 +1,7 @@
-import { Suspense } from "react";
-import PaymentClient from "./payment-client";
+export const dynamic = 'force-dynamic';
+
+import { Suspense } from 'react';
+import PaymentClient from './payment-client';
 
 export default function PaymentPage() {
   return (
