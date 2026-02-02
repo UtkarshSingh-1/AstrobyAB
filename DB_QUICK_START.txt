@@ -1,0 +1,117 @@
+==============================================================
+          DATABASE & SETUP - QUICK START GUIDE
+==============================================================
+
+✓ DATABASE CONNECTION: CONFIGURED
+  Location: Railway PostgreSQL
+  Config File: .env.local
+
+✓ PRISMA SCHEMA: UPDATED
+  Location: /prisma/schema.prisma
+  Ready for: User, Consultation, OTP models
+
+==============================================================
+                    3-STEP SETUP
+==============================================================
+
+STEP 1: Generate Prisma Client
+  Command: npx prisma generate
+  Time: ~10 seconds
+  Why: Creates database client for the app
+
+STEP 2: Create Database Tables
+  Command: npx prisma migrate dev --name init
+  Time: ~30 seconds
+  Why: Runs SQL migrations to create all tables
+
+STEP 3: Create Demo Accounts
+  Command: npx ts-node scripts/seed.ts
+  Time: ~5 seconds
+  Creates: 2 demo user accounts with sample data
+  Output: Shows login credentials
+
+==============================================================
+                  DEMO LOGIN CREDENTIALS
+==============================================================
+
+USER ACCOUNT:
+  Email: demo@user.com
+  Password: Demo@123
+  Role: USER (regular user dashboard)
+
+ADMIN ACCOUNT:
+  Email: demo@admin.com
+  Password: Admin@123
+  Role: ADMIN (admin dashboard)
+
+==============================================================
+                   START THE APP
+==============================================================
+
+Command: npm run dev
+
+Then open: http://localhost:3000/signin
+
+Click the eye icon on password fields to toggle visibility!
+
+==============================================================
+                  VIEW DATABASE VISUALLY
+==============================================================
+
+Command: npx prisma studio
+
+Opens: http://localhost:5555
+
+You can:
+  - View all data in tables
+  - Edit records
+  - Add/delete entries
+  - Test queries
+
+==============================================================
+                    KEY FILES
+==============================================================
+
+.env.local
+  ↓ Contains: DATABASE_URL, NEXTAUTH_SECRET
+  ↓ Your Railway connection string is here
+
+/prisma/schema.prisma
+  ↓ Database schema definition
+  ↓ Models: User, Account, Session, OTP, Consultation
+
+/scripts/seed.ts
+  ↓ Creates demo accounts
+  ↓ Populates test data
+
+/lib/auth.ts
+  ↓ NextAuth configuration
+  ↓ Uses database for authentication
+
+==============================================================
+                TROUBLESHOOTING
+==============================================================
+
+Error: "connect ECONNREFUSED"
+  → Database is not accessible
+  → Check Railway status
+  → Verify DATABASE_URL in .env.local
+
+Error: "relation does not exist"
+  → Tables haven't been created
+  → Run: npx prisma migrate dev --name init
+
+Error: "Authentication failed"
+  → Demo users weren't created
+  → Run: npx ts-node scripts/seed.ts
+
+==============================================================
+                YOU'RE ALL SET!
+==============================================================
+
+Next: Run the setup commands above in order
+Then: npm run dev
+Then: Login at http://localhost:3000/signin
+
+Questions? Check DATABASE_SETUP.md for detailed guide
+==============================================================
