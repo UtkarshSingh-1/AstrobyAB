@@ -15,12 +15,7 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({ disabled }) => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const result = await signIn('google', { redirect: false });
-      if (result?.error) {
-        toast.error(result.error);
-      } else if (result?.ok) {
-        window.location.href = '/dashboard';
-      }
+      await signIn('google', { callbackUrl: '/dashboard' });
     } catch (error) {
       toast.error('Google sign in failed');
     } finally {
