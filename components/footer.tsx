@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -9,10 +10,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-mars rounded-full flex items-center justify-center text-sm font-bold">
-                AB
-              </div>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/logo.jpeg"
+                alt="Astro by AB logo"
+                width={120}
+                height={120}
+                className="h-14 w-auto"
+              />
               <div>
                 <div className="text-cosmic-gold font-display font-bold">
                   ASTRO BY AB

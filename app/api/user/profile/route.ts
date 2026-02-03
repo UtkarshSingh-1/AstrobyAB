@@ -41,13 +41,21 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    const { name, ...profileData } = body;
+
+    if (name) {
+      await prisma.user.update({
+        where: { id: session.user.id },
+        data: { name },
+      });
+    }
 
     const profile = await prisma.userProfile.upsert({
       where: { userId: session.user.id },
-      update: body,
+      update: profileData,
       create: {
         userId: session.user.id,
-        ...body,
+        ...profileData,
       },
     });
 

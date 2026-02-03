@@ -24,6 +24,11 @@ export async function GET(request: NextRequest) {
         price: true,
         paymentStatus: true,
         createdAt: true,
+        consultationDate: true,
+        birthPlace: true,
+        birthDate: true,
+        birthTime: true,
+        consultationPurpose: true,
       },
       orderBy: {
         createdAt: 'desc',
@@ -54,7 +59,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, serviceName, price } = await request.json();
+    const {
+      name,
+      email,
+      serviceName,
+      price,
+      consultationDate,
+      birthPlace,
+      birthDate,
+      birthTime,
+      consultationPurpose,
+    } = await request.json();
 
     if (!name || !email || !serviceName || price === undefined) {
       return NextResponse.json(
@@ -71,6 +86,11 @@ export async function POST(request: NextRequest) {
         serviceName,
         price,
         paymentStatus: 'pending',
+        consultationDate: consultationDate ? new Date(consultationDate) : null,
+        birthPlace,
+        birthDate: birthDate ? new Date(birthDate) : null,
+        birthTime,
+        consultationPurpose,
       },
     });
 

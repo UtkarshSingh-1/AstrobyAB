@@ -69,34 +69,40 @@ export default function Dashboard() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 {
-                  icon: '☀️',
+                  icon: '\u2600\uFE0F',
                   title: 'Janam Kundli',
                   description: 'View your birth chart analysis',
+                  href: '/services/janam-kundli',
                 },
                 {
-                  icon: '💼',
+                  icon: '\uD83D\uDCBC',
                   title: 'Career Guidance',
                   description: 'Get career recommendations',
+                  href: '/services/career-guidance',
                 },
                 {
-                  icon: '❤️',
+                  icon: '\u2764\uFE0F',
                   title: 'Relationship Matching',
                   description: 'Explore compatibility',
+                  href: '/services/marriage-matching',
                 },
                 {
-                  icon: '💎',
+                  icon: '\u2B50',
+                  title: 'Health & Wealth',
+                  description: 'Planetary insights for wellbeing',
+                  href: '/services/health-wealth',
+                },
+                {
+                  icon: '\uD83D\uDC8E',
                   title: 'Gemstone Remedies',
                   description: 'Discover your gemstones',
+                  href: '/services/gemstone-remedies',
                 },
                 {
-                  icon: '🌙',
+                  icon: '\uD83C\uDF19',
                   title: 'Mantra Remedies',
                   description: 'Sacred mantras for you',
-                },
-                {
-                  icon: '📚',
-                  title: 'Learn Astrology',
-                  description: 'Expand your cosmic knowledge',
+                  href: '/services/mantra-remedies',
                 },
               ].map((service, idx) => (
                 <div
@@ -110,12 +116,14 @@ export default function Dashboard() {
                   <p className="text-muted-foreground text-sm mb-4">
                     {service.description}
                   </p>
-                  <Button
-                    variant="outline"
-                    className="w-full text-sm border-cosmic bg-transparent"
-                  >
-                    Explore
-                  </Button>
+                  <Link href={service.href}>
+                    <Button
+                      variant="outline"
+                      className="w-full text-sm border-cosmic bg-transparent"
+                    >
+                      Explore
+                    </Button>
+                  </Link>
                 </div>
               ))}
             </div>

@@ -1,6 +1,7 @@
 'use client';
 
-import Link from 'next/link';
+import AuthAction from '@/components/auth-action';
+import Image from 'next/image';
 
 export default function Hero() {
   return (
@@ -31,9 +32,14 @@ export default function Hero() {
             </p>
 
             <div className="flex gap-4 pt-4 flex-wrap">
-              <Link href="/signup" className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity">
-                Begin Your Journey →
-              </Link>
+              <AuthAction
+                href="/signup"
+                className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity"
+                dialogTitle="Create an account to continue"
+                dialogDescription="Sign up or sign in to begin your journey."
+              >
+                Begin Your Journey &rarr;
+              </AuthAction>
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -44,12 +50,15 @@ export default function Hero() {
 
           {/* Right - Circular Image */}
           <div className="flex justify-center md:justify-end">
-            <div className="w-80 h-80 bg-white/10 rounded-full shadow-cosmic flex items-center justify-center border border-white/20 animate-float backdrop-blur-sm">
-              <div className="text-center space-y-4">
-                <div className="text-6xl">☀️</div>
-                <div className="text-lg font-display font-semibold text-white">ASTRO BY AB</div>
-                <div className="text-sm text-mars-200 font-serif">Personalized Cosmic Guidance</div>
-              </div>
+            <div className="w-80 h-80 bg-white/10 rounded-full shadow-cosmic flex items-center justify-center border border-white/20 animate-float backdrop-blur-sm overflow-hidden">
+              <Image
+                src="/logo.jpeg"
+                alt="Astro by AB logo"
+                width={320}
+                height={320}
+                className="w-full h-full object-contain p-6"
+                priority
+              />
             </div>
           </div>
         </div>

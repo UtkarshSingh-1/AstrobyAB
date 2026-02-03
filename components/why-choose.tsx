@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import AuthAction from '@/components/auth-action';
 
 export default function WhyChoose() {
   const reasons = [
@@ -35,9 +35,14 @@ export default function WhyChoose() {
               ))}
             </div>
 
-            <Link href="/signup" className="inline-block bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity">
-              Get Started Today →
-            </Link>
+            <AuthAction
+              href="/signup"
+              className="inline-block bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 transition-opacity"
+              dialogTitle="Create an account to continue"
+              dialogDescription="Sign up or sign in to get started."
+            >
+              Get Started Today &rarr;
+            </AuthAction>
           </div>
 
           {/* Right - CTA Box */}
@@ -54,9 +59,14 @@ export default function WhyChoose() {
               <p className="text-muted-foreground font-serif">Initial Consultation</p>
             </div>
 
-            <Link href="/signup" className="block w-full bg-gradient-mars text-white py-3 rounded font-semibold hover:opacity-90 transition-opacity text-center">
+            <AuthAction
+              href="/book-consultation"
+              className="block w-full bg-gradient-mars text-white py-3 rounded font-semibold hover:opacity-90 transition-opacity text-center"
+              dialogTitle="Sign up to book a consultation"
+              dialogDescription="Create an account or sign in to book your consultation."
+            >
               Book Now
-            </Link>
+            </AuthAction>
           </div>
         </div>
       </div>

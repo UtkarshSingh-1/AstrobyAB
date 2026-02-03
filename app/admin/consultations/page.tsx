@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
+import ConsultationDetailsDialog from '@/components/consultation-details-dialog';
 import Link from 'next/link';
 
 interface Consultation {
@@ -16,6 +17,11 @@ interface Consultation {
   paymentStatus: string;
   price: number;
   createdAt: string;
+  consultationDate?: string | null;
+  birthPlace?: string | null;
+  birthDate?: string | null;
+  birthTime?: string | null;
+  consultationPurpose?: string | null;
 }
 
 export default function AdminConsultations() {
@@ -88,8 +94,10 @@ export default function AdminConsultations() {
                       <th className="px-6 py-3 text-left text-sm font-semibold">Email</th>
                       <th className="px-6 py-3 text-left text-sm font-semibold">Service</th>
                       <th className="px-6 py-3 text-left text-sm font-semibold">Amount</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Birth Details</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Purpose</th>
                       <th className="px-6 py-3 text-left text-sm font-semibold">Status</th>
-                      <th className="px-6 py-3 text-left text-sm font-semibold">Date</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Preferred Date</th>
                       <th className="px-6 py-3 text-left text-sm font-semibold">Actions</th>
                     </tr>
                   </thead>
@@ -112,6 +120,20 @@ export default function AdminConsultations() {
                           <td className="px-6 py-4 text-sm font-medium">
                             ₹{consultation.price}
                           </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            <div className="space-y-1">
+                              <div>{consultation.birthPlace || '-'}</div>
+                              <div>
+                                {consultation.birthDate
+                                  ? new Date(consultation.birthDate).toLocaleDateString()
+                                  : '-'}
+                                {consultation.birthTime ? ` - ${consultation.birthTime}` : ''}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground max-w-xs">
+                            {consultation.consultationPurpose || '-'}
+                          </td>
                           <td className="px-6 py-4 text-sm">
                             <span
                               className={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -127,19 +149,50 @@ export default function AdminConsultations() {
                             </span>
                           </td>
                           <td className="px-6 py-4 text-sm text-muted-foreground">
-                            {new Date(consultation.createdAt).toLocaleDateString()}
+                            {consultation.consultationDate
+                              ? new Date(consultation.consultationDate).toLocaleDateString()
+                              : new Date(consultation.createdAt).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 text-sm">
-                            <Button size="sm" variant="outline">
-                              View
-                            </Button>
+                            <ConsultationDetailsDialog
+                              triggerLabel="View"
+                              title="Consultation Details"
+                              fields={[
+                                { label: 'Client', value: consultation.name },
+                                { label: 'Email', value: consultation.email },
+                                { label: 'Service', value: consultation.serviceName },
+                                { label: 'Amount', value: `INR ${consultation.price}` },
+                                {
+                                  label: 'Preferred Date',
+                                  value: consultation.consultationDate
+                                    ? new Date(consultation.consultationDate).toLocaleString()
+                                    : new Date(consultation.createdAt).toLocaleString(),
+                                },
+                                { label: 'Birth Place', value: consultation.birthPlace || '-' },
+                                {
+                                  label: 'Birth Date',
+                                  value: consultation.birthDate
+                                    ? new Date(consultation.birthDate).toLocaleDateString()
+                                    : '-',
+                                },
+                                { label: 'Birth Time', value: consultation.birthTime || '-' },
+                                {
+                                  label: 'Purpose',
+                                  value: consultation.consultationPurpose || '-',
+                                },
+                                {
+                                  label: 'Payment Status',
+                                  value: consultation.paymentStatus,
+                                },
+                              ]}
+                            />
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
                         <td
-                          colSpan={7}
+                          colSpan={9}
                           className="px-6 py-8 text-center text-muted-foreground"
                         >
                           No consultations found

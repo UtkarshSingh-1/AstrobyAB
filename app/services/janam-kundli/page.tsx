@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import AuthAction from '@/components/auth-action';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
@@ -21,9 +21,16 @@ export default function JanamKundliPage() {
                   <p className="text-sm text-mars-200">Consultation Price</p>
                   <p className="text-3xl font-bold text-cosmic-gold">₹501</p>
                 </div>
-                <Link href="/book-consultation?service=janam-kundli" className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block">
+                <AuthAction
+                href="/book-consultation?service=janam-kundli"
+                className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block"
+                dialogTitle="Sign up to book a consultation"
+                dialogDescription="Create an account or sign in to book your consultation."
+              >
+
                   Book Your Analysis
-                </Link>
+                
+              </AuthAction>
               </div>
             </div>
           </div>
@@ -56,9 +63,16 @@ export default function JanamKundliPage() {
                   <li>• Time of birth (HH:MM AM/PM)</li>
                   <li>• City/Place of birth</li>
                 </ul>
-                <Link href="/signup" className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center">
+                <AuthAction
+                href="/book-consultation?service=janam-kundli"
+                className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center"
+                dialogTitle="Sign up to book a consultation"
+                dialogDescription="Create an account or sign in to book your consultation."
+              >
+
                   Get Started
-                </Link>
+                
+              </AuthAction>
               </div>
             </div>
           </div>

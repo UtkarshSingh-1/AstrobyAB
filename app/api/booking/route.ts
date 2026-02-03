@@ -15,11 +15,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, serviceName, price, paymentMethod } = await request.json();
+    const {
+      name,
+      email,
+      serviceName,
+      price,
+      consultationDate,
+      birthPlace,
+      birthDate,
+      birthTime,
+      consultationPurpose,
+    } = await request.json();
 
     if (!name || !email || !serviceName || price === undefined) {
       return NextResponse.json(
         { success: false, error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    if (!consultationDate) {
+      return NextResponse.json(
+        { success: false, error: 'Consultation date is required' },
+        { status: 400 }
+      );
+    }
+
+    if (!birthPlace || !birthDate || !birthTime || !consultationPurpose) {
+      return NextResponse.json(
+        { success: false, error: 'Missing birth details or consultation purpose' },
         { status: 400 }
       );
     }
@@ -33,6 +57,11 @@ export async function POST(request: NextRequest) {
         serviceName,
         price,
         paymentStatus: 'pending',
+        consultationDate: consultationDate ? new Date(consultationDate) : null,
+        birthPlace,
+        birthDate: birthDate ? new Date(birthDate) : null,
+        birthTime,
+        consultationPurpose,
       },
     });
 

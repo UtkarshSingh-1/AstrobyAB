@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface AuthCardProps {
@@ -15,9 +16,14 @@ const AuthCard: React.FC<AuthCardProps> = ({ title, description, children }) => 
       <div className="w-full max-w-md animate-fade-in">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="h-20 w-20 rounded-full shadow-cosmic bg-gradient-mars mb-4 animate-float flex items-center justify-center text-white font-bold text-2xl">
-            AB
-          </div>
+          <Image
+            src="/logo.jpeg"
+            alt="Astro by AB logo"
+            width={140}
+            height={140}
+            className="h-20 w-auto mb-4 animate-float"
+            priority
+          />
           <h1 className="font-display text-2xl font-semibold text-gradient-mars">Astro by AB</h1>
           <p className="text-sm text-muted-foreground font-serif mt-1">Vedic Wisdom for Your Journey</p>
         </div>

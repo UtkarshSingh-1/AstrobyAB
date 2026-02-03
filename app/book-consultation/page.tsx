@@ -1,15 +1,15 @@
 'use client';
 
-import React from "react"
-
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import AuthRequiredDialog from '@/components/auth-required-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 
 interface Service {
@@ -21,6 +21,7 @@ interface Service {
 
 export default function BookConsultation() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { data: session, status } = useSession();
   const [services, setServices] = useState<Service[]>([]);
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
@@ -28,14 +29,19 @@ export default function BookConsultation() {
     name: '',
     email: '',
     consultationDate: '',
+    birthPlace: '',
+    birthDate: '',
+    birthTime: '',
+    consultationPurpose: '',
   });
   const [loading, setLoading] = useState(false);
+  const [authDialogOpen, setAuthDialogOpen] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/signin');
+      setAuthDialogOpen(true);
     }
-  }, [status, router]);
+  }, [status]);
 
   useEffect(() => {
     if (session?.user) {
@@ -49,7 +55,10 @@ export default function BookConsultation() {
 
   useEffect(() => {
     fetchServices();
-  }, []);
+  }, [searchParams]);
+
+  const normalizeServiceSlug = (value: string) =>
+    value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
   const fetchServices = async () => {
     try {
@@ -58,7 +67,15 @@ export default function BookConsultation() {
         const data = await response.json();
         setServices(data.services || []);
         if (data.services?.length > 0) {
-          setSelectedServiceId(data.services[0].id);
+          const requested = searchParams.get('service');
+          const matched = requested
+            ? data.services.find(
+                (service: Service) =>
+                  service.id === requested ||
+                  normalizeServiceSlug(service.name) === requested
+              )
+            : null;
+          setSelectedServiceId(matched?.id || data.services[0].id);
         }
       }
     } catch (error) {
@@ -67,7 +84,9 @@ export default function BookConsultation() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -77,9 +96,27 @@ export default function BookConsultation() {
     setLoading(true);
 
     try {
+      if (!session?.user) {
+        setAuthDialogOpen(true);
+        setLoading(false);
+        return;
+      }
+
       const selectedService = services.find((s) => s.id === selectedServiceId);
       if (!selectedService) {
         toast.error('Please select a service');
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.birthPlace || !formData.birthDate || !formData.birthTime) {
+        toast.error('Please enter your birth details');
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.consultationPurpose) {
+        toast.error('Please share the purpose of your consultation');
         setLoading(false);
         return;
       }
@@ -99,15 +136,20 @@ export default function BookConsultation() {
           serviceName: selectedService.name,
           price: selectedService.price,
           consultationDate: formData.consultationDate,
+          birthPlace: formData.birthPlace,
+          birthDate: formData.birthDate,
+          birthTime: formData.birthTime,
+          consultationPurpose: formData.consultationPurpose,
         }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
         toast.success('Consultation booked! Proceeding to payment...');
         setTimeout(() => router.push(`/payment?consultationId=${data.booking.id}`), 1500);
       } else {
-        toast.error('Failed to book consultation');
+        toast.error(data.error || 'Failed to book consultation');
       }
     } catch (error) {
       console.error('[v0] Booking error:', error);
@@ -118,6 +160,7 @@ export default function BookConsultation() {
   };
 
   const selectedService = services.find((s) => s.id === selectedServiceId);
+  const formDisabled = status !== 'authenticated';
 
   if (status === 'loading') {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
@@ -126,6 +169,12 @@ export default function BookConsultation() {
   return (
     <>
       <Header />
+      <AuthRequiredDialog
+        open={authDialogOpen}
+        onOpenChange={setAuthDialogOpen}
+        title="Sign up to book a consultation"
+        description="Create an account or sign in to continue with your booking."
+      />
       <div className="min-h-screen bg-background py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="space-y-8">
@@ -179,7 +228,7 @@ export default function BookConsultation() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        disabled
+                        disabled={formDisabled}
                       />
                     </div>
 
@@ -191,7 +240,58 @@ export default function BookConsultation() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        disabled
+                        disabled={formDisabled}
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Birth Place</label>
+                      <Input
+                        type="text"
+                        name="birthPlace"
+                        value={formData.birthPlace}
+                        onChange={handleChange}
+                        placeholder="City, State, Country"
+                        required
+                        disabled={formDisabled}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Birth Date</label>
+                        <Input
+                          type="date"
+                          name="birthDate"
+                          value={formData.birthDate}
+                          onChange={handleChange}
+                          required
+                          disabled={formDisabled}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Birth Time</label>
+                        <Input
+                          type="time"
+                          name="birthTime"
+                          value={formData.birthTime}
+                          onChange={handleChange}
+                          required
+                          disabled={formDisabled}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Purpose of Consultation</label>
+                      <Textarea
+                        name="consultationPurpose"
+                        value={formData.consultationPurpose}
+                        onChange={handleChange}
+                        placeholder="Share what you'd like to discuss"
+                        rows={4}
+                        required
+                        disabled={formDisabled}
                       />
                     </div>
 
@@ -203,6 +303,7 @@ export default function BookConsultation() {
                         value={formData.consultationDate}
                         onChange={handleChange}
                         required
+                        disabled={formDisabled}
                       />
                     </div>
 
@@ -223,7 +324,7 @@ export default function BookConsultation() {
 
                     <Button
                       type="submit"
-                      disabled={loading || !selectedService}
+                      disabled={loading || !selectedService || formDisabled}
                       className="w-full bg-gradient-mars text-white"
                     >
                       {loading ? 'Processing...' : 'Proceed to Payment'}

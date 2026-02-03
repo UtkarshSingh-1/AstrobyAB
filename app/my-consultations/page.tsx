@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
+import ConsultationDetailsDialog from '@/components/consultation-details-dialog';
 import Link from 'next/link';
 
 interface UserConsultation {
@@ -120,9 +121,19 @@ export default function MyConsultations() {
                             {new Date(consultation.createdAt).toLocaleDateString()}
                           </td>
                           <td className="px-6 py-4 text-sm">
-                            <Button size="sm" variant="outline">
-                              View Details
-                            </Button>
+                            <ConsultationDetailsDialog
+                              triggerLabel="View Details"
+                              title="Consultation Details"
+                              fields={[
+                                { label: 'Service', value: consultation.serviceName },
+                                { label: 'Amount', value: `INR ${consultation.price}` },
+                                { label: 'Status', value: consultation.paymentStatus },
+                                {
+                                  label: 'Booked On',
+                                  value: new Date(consultation.createdAt).toLocaleString(),
+                                },
+                              ]}
+                            />
                           </td>
                         </tr>
                       ))

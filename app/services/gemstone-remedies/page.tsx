@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import AuthAction from '@/components/auth-action';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
@@ -21,9 +21,16 @@ export default function GemstoneRemediePage() {
                   <p className="text-sm text-mars-200">Consultation Price</p>
                   <p className="text-3xl font-bold text-cosmic-gold">₹501</p>
                 </div>
-                <Link href="/book-consultation?service=gemstone-remedies" className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block">
+                <AuthAction
+                href="/book-consultation?service=gemstone-remedies"
+                className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block"
+                dialogTitle="Sign up to book a consultation"
+                dialogDescription="Create an account or sign in to book your consultation."
+              >
+
                   Get Recommendations
-                </Link>
+                
+              </AuthAction>
               </div>
             </div>
           </div>
@@ -59,9 +66,16 @@ export default function GemstoneRemediePage() {
                   <li>• Blue Sapphire (Saturn) - Discipline</li>
                   <li>• Coral (Mars) - Energy & Courage</li>
                 </ul>
-                <Link href="/signup" className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center">
+                <AuthAction
+                href="/book-consultation?service=gemstone-remedies"
+                className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center"
+                dialogTitle="Sign up to book a consultation"
+                dialogDescription="Create an account or sign in to book your consultation."
+              >
+
                   Find Your Gems
-                </Link>
+                
+              </AuthAction>
               </div>
             </div>
           </div>

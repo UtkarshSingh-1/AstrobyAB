@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import AuthAction from '@/components/auth-action';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 
@@ -20,9 +20,16 @@ export default function CompleteAstrologyPage() {
                   <p className="text-sm text-mars-200">Consultation Price</p>
                   <p className="text-4xl font-bold text-cosmic-gold">₹21,001</p>
                 </div>
-                <Link href="/book-consultation?service=complete-astrology" className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block">
+                <AuthAction
+                href="/book-consultation?service=complete-astrology"
+                className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block"
+                dialogTitle="Sign up to book a consultation"
+                dialogDescription="Create an account or sign in to book your consultation."
+              >
+
                   Book Now
-                </Link>
+                
+              </AuthAction>
               </div>
             </div>
           </div>
@@ -74,9 +81,16 @@ export default function CompleteAstrologyPage() {
                     <p className="text-sm text-muted-foreground">Direct guidance from experienced Vedic astrologers</p>
                   </div>
                 </div>
-                <Link href="/signup" className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center">
+                <AuthAction
+                href="/book-consultation?service=complete-astrology"
+                className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center"
+                dialogTitle="Sign up to book a consultation"
+                dialogDescription="Create an account or sign in to book your consultation."
+              >
+
                   Book Your Complete Analysis - ₹21,001
-                </Link>
+                
+              </AuthAction>
               </div>
             </div>
           </div>
