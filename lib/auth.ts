@@ -61,11 +61,34 @@ export const authOptions: NextAuthOptions = {
     error: "/error",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         token.role = (user as any).role || "USER";
         token.id = user.id;
       }
+
+      if (account?.provider === 'google' && token.email) {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: token.email },
+        });
+
+        if (existingUser) {
+          token.id = existingUser.id;
+          token.role = existingUser.role;
+        } else {
+          const createdUser = await prisma.user.create({
+            data: {
+              email: token.email,
+              name: token.name || null,
+              image: token.picture || null,
+              role: 'USER',
+            },
+          });
+          token.id = createdUser.id;
+          token.role = createdUser.role;
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
