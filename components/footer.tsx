@@ -12,11 +12,11 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Image
-                src="/logo.jpeg"
+                src="/logo1.jpeg"
                 alt="Astro by AB logo"
                 width={120}
                 height={120}
-                className="h-14 w-auto"
+                className="h-14 w-auto animate-glow"
               />
               <div>
                 <div className="text-cosmic-gold font-display font-bold">

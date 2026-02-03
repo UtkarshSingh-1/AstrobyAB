@@ -106,7 +106,7 @@ export default function ProfilePage() {
       <div className="min-h-screen bg-background py-12">
         <div className="container mx-auto px-4 max-w-2xl">
           <div className="space-y-8">
-            <div className="bg-gradient-warm rounded-lg p-8 shadow-cosmic">
+            <div className="bg-gradient-warm rounded-lg p-8 shadow-cosmic animate-gradient-shift">
               <h1 className="text-4xl font-display font-bold text-foreground mb-2">
                 Your Profile
               </h1>
@@ -115,7 +115,7 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <Card className="p-8 border-cosmic">
+            <Card className="p-8 border-cosmic hover-glow">
               <form onSubmit={handleSave} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">Full Name</label>
@@ -189,7 +189,7 @@ export default function ProfilePage() {
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-gradient-mars text-white"
+                    className="flex-1 bg-gradient-mars text-white hover-glow"
                   >
                     {loading ? 'Saving...' : 'Save Profile'}
                   </Button>
@@ -197,7 +197,7 @@ export default function ProfilePage() {
                     type="button"
                     variant="outline"
                     onClick={() => redirect('/dashboard')}
-                    className="bg-transparent"
+                    className="bg-transparent hover-tilt"
                   >
                     Back
                   </Button>

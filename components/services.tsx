@@ -63,8 +63,8 @@ export default function Services() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, idx) => (
             <Link key={idx} href={service.href} className="group">
-              <div className="border-cosmic rounded-lg p-6 hover:shadow-cosmic transition-all hover:scale-105 bg-white/50 backdrop-blur-sm h-full">
-                <div className="text-3xl mb-4 bg-gradient-mars text-white w-14 h-14 rounded flex items-center justify-center">
+              <div className="border-cosmic rounded-lg p-6 hover:shadow-cosmic transition-all hover:scale-105 bg-white/50 backdrop-blur-sm h-full hover-glow">
+                <div className="text-3xl mb-4 bg-gradient-mars text-white w-14 h-14 rounded flex items-center justify-center animate-cosmic-pulse">
                   {service.icon}
                 </div>
                 <h3 className="text-lg font-display font-bold text-foreground mb-3">

@@ -17,11 +17,11 @@ const AuthCard: React.FC<AuthCardProps> = ({ title, description, children }) => 
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <Image
-            src="/logo.jpeg"
+            src="/logo1.jpeg"
             alt="Astro by AB logo"
             width={140}
             height={140}
-            className="h-20 w-auto mb-4 animate-float"
+            className="h-20 w-auto mb-4 animate-float animate-glow"
             priority
           />
           <h1 className="font-display text-2xl font-semibold text-gradient-mars">Astro by AB</h1>

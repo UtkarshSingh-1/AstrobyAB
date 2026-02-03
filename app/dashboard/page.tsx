@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -29,10 +30,22 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-12">
           <div className="space-y-8">
             {/* Welcome Section */}
-            <div className="bg-gradient-warm rounded-lg p-8 shadow-cosmic">
-              <h1 className="text-4xl font-display font-bold text-foreground mb-2">
-                Welcome, {session.user?.name || 'User'}!
-              </h1>
+            <div className="bg-gradient-warm rounded-lg p-8 shadow-cosmic animate-gradient-shift">
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <Image
+                  src="/logo1.jpeg"
+                  alt="AstrobyAB logo"
+                  width={96}
+                  height={96}
+                  className="h-12 w-auto animate-glow"
+                />
+                <div>
+                  <p className="text-sm text-muted-foreground font-medium">AstrobyAB</p>
+                  <h1 className="text-4xl font-display font-bold text-foreground">
+                    Welcome, {session.user?.name || 'User'}!
+                  </h1>
+                </div>
+              </div>
               <p className="text-lg text-muted-foreground">
                 Explore your personalized cosmic guidance
               </p>
@@ -41,7 +54,7 @@ export default function Dashboard() {
             {/* Quick Actions */}
             <div className="grid md:grid-cols-2 gap-6">
               <Link href="/book-consultation">
-                <div className="border-cosmic rounded-lg p-6 bg-gradient-mars text-white shadow-card hover:shadow-cosmic transition-all cursor-pointer">
+                <div className="border-cosmic rounded-lg p-6 bg-gradient-mars text-white shadow-card hover:shadow-cosmic transition-all cursor-pointer hover-glow">
                   <div className="text-4xl mb-4">📞</div>
                   <h3 className="text-lg font-display font-bold mb-2">
                     Book Consultation
@@ -53,7 +66,7 @@ export default function Dashboard() {
               </Link>
 
               <Link href="/my-consultations">
-                <div className="border-cosmic rounded-lg p-6 bg-gradient-warm text-foreground shadow-card hover:shadow-cosmic transition-all cursor-pointer">
+                <div className="border-cosmic rounded-lg p-6 bg-gradient-warm text-foreground shadow-card hover:shadow-cosmic transition-all cursor-pointer hover-glow">
                   <div className="text-4xl mb-4">📋</div>
                   <h3 className="text-lg font-display font-bold mb-2">
                     My Consultations
@@ -107,7 +120,7 @@ export default function Dashboard() {
               ].map((service, idx) => (
                 <div
                   key={idx}
-                  className="border-cosmic rounded-lg p-6 bg-card shadow-card hover:shadow-cosmic transition-all"
+                  className="border-cosmic rounded-lg p-6 bg-card shadow-card hover:shadow-cosmic transition-all hover-glow"
                 >
                   <div className="text-4xl mb-4">{service.icon}</div>
                   <h3 className="text-lg font-display font-bold text-foreground mb-2">
@@ -119,7 +132,7 @@ export default function Dashboard() {
                   <Link href={service.href}>
                     <Button
                       variant="outline"
-                      className="w-full text-sm border-cosmic bg-transparent"
+                      className="w-full text-sm border-cosmic bg-transparent hover-tilt"
                     >
                       Explore
                     </Button>

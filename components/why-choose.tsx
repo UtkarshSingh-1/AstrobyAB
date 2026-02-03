@@ -46,7 +46,7 @@ export default function WhyChoose() {
           </div>
 
           {/* Right - CTA Box */}
-          <div className="bg-card border-cosmic rounded-lg p-8 shadow-cosmic space-y-6">
+          <div className="bg-card border-cosmic rounded-lg p-8 shadow-cosmic space-y-6 hover-glow">
             <h3 className="text-2xl font-display font-bold text-gradient-mars">
               BOOK A CONSULTATION
             </h3>
@@ -61,7 +61,7 @@ export default function WhyChoose() {
 
             <AuthAction
               href="/book-consultation"
-              className="block w-full bg-gradient-mars text-white py-3 rounded font-semibold hover:opacity-90 transition-opacity text-center"
+              className="block w-full bg-gradient-mars text-white py-3 rounded font-semibold hover:opacity-90 transition-opacity text-center hover-glow"
               dialogTitle="Sign up to book a consultation"
               dialogDescription="Create an account or sign in to book your consultation."
             >

@@ -42,6 +42,7 @@ export default function RootLayout({
         <RootLayoutClient>
           {children}
         </RootLayoutClient>
+        <div className="sparkle-layer" aria-hidden="true" />
         <Analytics />
       </body>
     </html>
