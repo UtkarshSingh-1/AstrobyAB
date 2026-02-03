@@ -59,8 +59,19 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Link href="/signin"><Button variant="ghost" className="hover-tilt">Sign In</Button></Link>
-              <Link href="/signup"><Button className="hover-glow">Get Started</Button></Link>
+              <Link href="/signin">
+                <Button
+                  variant="outline"
+                  className="hover-tilt border-mars-500 text-mars-700"
+                >
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="hover-glow bg-gradient-mars text-white">
+                  Get Started
+                </Button>
+              </Link>
             </>
           )}
         </div>

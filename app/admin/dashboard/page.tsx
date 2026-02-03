@@ -15,6 +15,18 @@ interface DashboardStats {
   totalRevenue: number;
 }
 
+interface ConsultationSummary {
+  id: string;
+  name: string;
+  email: string;
+  serviceName: string;
+  consultationPurpose?: string | null;
+  birthPlace?: string | null;
+  birthDate?: string | null;
+  birthTime?: string | null;
+  createdAt: string;
+}
+
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const [stats, setStats] = useState<DashboardStats>({
@@ -23,6 +35,7 @@ export default function AdminDashboard() {
     pendingPayments: 0,
     totalRevenue: 0,
   });
+  const [recentConsultations, setRecentConsultations] = useState<ConsultationSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,8 +59,21 @@ export default function AdminDashboard() {
       }
     };
 
+    const fetchRecentConsultations = async () => {
+      try {
+        const response = await fetch('/api/admin/consultations');
+        if (response.ok) {
+          const data = await response.json();
+          setRecentConsultations((data.consultations || []).slice(0, 5));
+        }
+      } catch (error) {
+        console.error('[v0] Failed to fetch recent consultations:', error);
+      }
+    };
+
     if (status === 'authenticated') {
       fetchStats();
+      fetchRecentConsultations();
     }
   }, [status]);
 
@@ -94,6 +120,74 @@ export default function AdminDashboard() {
               <div className="bg-white/50 backdrop-blur-sm border-cosmic rounded-lg p-6 text-center">
                 <div className="text-3xl font-display font-bold text-gradient-mars mb-2">₹{stats.totalRevenue.toFixed(0)}</div>
                 <p className="text-muted-foreground font-medium">Total Revenue</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Recent Consultations */}
+        <section className="py-12 bg-background border-b border-border">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-display font-bold">Recent Consultations</h2>
+              <Link href="/admin/consultations">
+                <Button variant="outline">View All</Button>
+              </Link>
+            </div>
+            <div className="border-cosmic rounded-lg overflow-hidden bg-card shadow-cosmic">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gradient-mars text-white">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Client</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Service</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Email</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Purpose</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Birth Details</th>
+                      <th className="px-6 py-3 text-left text-sm font-semibold">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {recentConsultations.length > 0 ? (
+                      recentConsultations.map((consultation) => (
+                        <tr key={consultation.id} className="hover:bg-muted/50 transition-colors">
+                          <td className="px-6 py-4 text-sm text-foreground font-medium">
+                            {consultation.name}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {consultation.serviceName}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {consultation.email}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground max-w-xs">
+                            {consultation.consultationPurpose || '-'}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            <div className="space-y-1">
+                              <div>{consultation.birthPlace || '-'}</div>
+                              <div>
+                                {consultation.birthDate
+                                  ? new Date(consultation.birthDate).toLocaleDateString()
+                                  : '-'}
+                                {consultation.birthTime ? ` - ${consultation.birthTime}` : ''}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {new Date(consultation.createdAt).toLocaleDateString()}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-6 text-center text-muted-foreground">
+                          No consultations yet
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

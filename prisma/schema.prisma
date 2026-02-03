@@ -72,6 +72,7 @@ model Otp {
 model Service {
   id          String   @id @default(uuid())
   name        String   @unique
+  slug        String?  @unique
   price       Float
   description String?  @db.Text
   icon        String?
@@ -79,6 +80,7 @@ model Service {
   updatedAt   DateTime @updatedAt
 
   @@index([name])
+  @@index([slug])
 }
 
 model UserProfile {

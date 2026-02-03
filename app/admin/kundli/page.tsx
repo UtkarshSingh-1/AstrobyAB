@@ -18,32 +18,14 @@ export default function AdminKundli() {
     redirect('/unauthorized');
   }
 
-  const kundlis = [
-    {
-      id: 1,
-      name: 'Rahul Sharma',
-      birthDate: '1990-05-15',
-      birthTime: '10:30 AM',
-      birthPlace: 'Delhi',
-      status: 'Completed',
-    },
-    {
-      id: 2,
-      name: 'Anjali Gupta',
-      birthDate: '1995-08-22',
-      birthTime: '02:45 PM',
-      birthPlace: 'Mumbai',
-      status: 'Pending Analysis',
-    },
-    {
-      id: 3,
-      name: 'Vikram Singh',
-      birthDate: '1988-12-10',
-      birthTime: '11:20 AM',
-      birthPlace: 'Bangalore',
-      status: 'In Progress',
-    },
-  ];
+  const kundlis: Array<{
+    id: number;
+    name: string;
+    birthDate: string;
+    birthTime: string;
+    birthPlace: string;
+    status: string;
+  }> = [];
 
   return (
     <>
@@ -83,43 +65,46 @@ export default function AdminKundli() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {kundlis.map((kundli) => (
-                      <tr key={kundli.id} className="hover:bg-muted/50 transition-colors">
-                        <td className="px-6 py-4 text-sm text-foreground font-medium">
-                          {kundli.name}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-muted-foreground">
-                          {new Date(kundli.birthDate).toLocaleDateString()}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-muted-foreground">
-                          {kundli.birthTime}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-muted-foreground">
-                          {kundli.birthPlace}
-                        </td>
-                        <td className="px-6 py-4 text-sm">
-                          <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              kundli.status === 'Completed'
-                                ? 'bg-green-100 text-green-800'
-                                : kundli.status === 'Pending Analysis'
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : 'bg-blue-100 text-blue-800'
-                            }`}
-                          >
-                            {kundli.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 text-sm flex gap-2">
-                          <Button size="sm" variant="outline">
-                            View
-                          </Button>
-                          <Button size="sm" variant="outline">
-                            Edit
-                          </Button>
+                    {kundlis.length > 0 ? (
+                      kundlis.map((kundli) => (
+                        <tr key={kundli.id} className="hover:bg-muted/50 transition-colors">
+                          <td className="px-6 py-4 text-sm text-foreground font-medium">
+                            {kundli.name}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {new Date(kundli.birthDate).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {kundli.birthTime}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-muted-foreground">
+                            {kundli.birthPlace}
+                          </td>
+                          <td className="px-6 py-4 text-sm">
+                            <span className="px-3 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground">
+                              {kundli.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm flex gap-2">
+                            <Button size="sm" variant="outline">
+                              View
+                            </Button>
+                            <Button size="sm" variant="outline">
+                              Edit
+                            </Button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan={6}
+                          className="px-6 py-10 text-center text-muted-foreground"
+                        >
+                          No kundli records yet
                         </td>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>

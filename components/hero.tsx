@@ -1,6 +1,7 @@
 'use client';
 
 import AuthAction from '@/components/auth-action';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function Hero() {
@@ -37,7 +38,7 @@ export default function Hero() {
             </div>
 
             <p className="text-xl text-mars-200 italic font-serif">
-              "यथा पिण्डे तथा ब्रह्माण्डे"
+              {"\u092F\u0925\u093E \u092A\u093F\u0923\u094D\u0921\u0947 \u0924\u0925\u093E \u092C\u094D\u0930\u0939\u094D\u092E\u093E\u0923\u094D\u0921\u0947"}
             </p>
 
             <p className="text-lg text-mars-100 leading-relaxed">
@@ -56,7 +57,7 @@ export default function Hero() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="px-6 py-3 rounded text-foreground bg-white/90 flex-1 min-w-[200px] placeholder-muted-foreground placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-cosmic-gold"
+                className="px-6 py-3 rounded text-foreground bg-white/95 border border-white/60 shadow-cosmic flex-1 min-w-[220px] placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cosmic-gold"
               />
             </div>
           </div>
@@ -85,9 +86,13 @@ export default function Hero() {
       </div>
 
       {/* Chat Icon - Bottom Right */}
-      <div className="absolute bottom-6 right-6 w-12 h-12 bg-accent rounded-full flex items-center justify-center cursor-pointer hover:shadow-cosmic transition-all shadow-cosmic">
+      <Link
+        href="/contact"
+        className="absolute bottom-6 right-6 w-12 h-12 bg-accent rounded-full flex items-center justify-center cursor-pointer hover:shadow-cosmic transition-all shadow-cosmic"
+        aria-label="Contact us"
+      >
         <span className="text-white text-xl animate-cosmic-pulse">{'\u{1F4AC}'}</span>
-      </div>
+      </Link>
     </section>
   );
 }

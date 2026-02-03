@@ -8,6 +8,7 @@ import Footer from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import ConsultationDetailsDialog from '@/components/consultation-details-dialog';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface UserConsultation {
   id: string;
@@ -63,14 +64,23 @@ export default function MyConsultations() {
         <div className="container mx-auto px-4 py-12">
           <div className="space-y-8">
             {/* Header */}
-            <div className="flex justify-between items-center">
-              <div>
-                <h1 className="text-4xl font-display font-bold text-foreground">
-                  My Consultations
-                </h1>
-                <p className="text-muted-foreground mt-2">
-                  Total Bookings: {consultations.length}
-                </p>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/logo1.jpeg"
+                  alt="AstrobyAB logo"
+                  width={72}
+                  height={72}
+                  className="h-12 w-auto"
+                />
+                <div>
+                  <h1 className="text-4xl font-display font-bold text-foreground">
+                    My Consultations
+                  </h1>
+                  <p className="text-muted-foreground mt-2">
+                    Total Bookings: {consultations.length}
+                  </p>
+                </div>
               </div>
               <Link href="/dashboard">
                 <Button variant="outline">Back to Dashboard</Button>

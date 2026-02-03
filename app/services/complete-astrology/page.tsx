@@ -1,8 +1,14 @@
 import AuthAction from '@/components/auth-action';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { prisma } from '@/lib/prisma';
 
-export default function CompleteAstrologyPage() {
+export default async function CompleteAstrologyPage() {
+  const service = await prisma.service.findFirst({
+    where: { slug: 'complete-astrology' },
+  });
+  const price = service?.price ?? 21001;
+
   return (
     <>
       <Header />
@@ -10,7 +16,7 @@ export default function CompleteAstrologyPage() {
         <section className="bg-gradient-cosmic text-white py-20">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
-              <div className="text-sm text-mars-200 mb-4">⭐ Premium Service</div>
+              <div className="text-sm text-mars-200 mb-4">{'\u{2B50}'} Premium Service</div>
               <h1 className="text-5xl font-display font-bold mb-6">Complete Astrology Analysis</h1>
               <p className="text-xl text-mars-100 font-serif leading-relaxed mb-8">
                 Experience our most comprehensive astrological service that combines all our expertise into one powerful consultation package.
@@ -18,18 +24,16 @@ export default function CompleteAstrologyPage() {
               <div className="flex items-center gap-4">
                 <div>
                   <p className="text-sm text-mars-200">Consultation Price</p>
-                  <p className="text-4xl font-bold text-cosmic-gold">₹21,001</p>
+                  <p className="text-4xl font-bold text-cosmic-gold">{'\u20B9'}{price.toLocaleString()}</p>
                 </div>
                 <AuthAction
-                href="/book-consultation?service=complete-astrology"
-                className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block"
-                dialogTitle="Sign up to book a consultation"
-                dialogDescription="Create an account or sign in to book your consultation."
-              >
-
+                  href="/book-consultation?service=complete-astrology"
+                  className="bg-gradient-mars text-white px-8 py-3 rounded font-semibold hover:opacity-90 inline-block"
+                  dialogTitle="Sign up to book a consultation"
+                  dialogDescription="Create an account or sign in to book your consultation."
+                >
                   Book Now
-                
-              </AuthAction>
+                </AuthAction>
               </div>
             </div>
           </div>
@@ -55,7 +59,7 @@ export default function CompleteAstrologyPage() {
                     'Auspicious Timings for Important Events'
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3">
-                      <span className="text-primary mt-1">✓</span>
+                      <span className="text-primary mt-1">{'\u{2713}'} </span>
                       <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
@@ -82,15 +86,13 @@ export default function CompleteAstrologyPage() {
                   </div>
                 </div>
                 <AuthAction
-                href="/book-consultation?service=complete-astrology"
-                className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center"
-                dialogTitle="Sign up to book a consultation"
-                dialogDescription="Create an account or sign in to book your consultation."
-              >
-
-                  Book Your Complete Analysis - ₹21,001
-                
-              </AuthAction>
+                  href="/book-consultation?service=complete-astrology"
+                  className="block w-full bg-gradient-mars text-white px-6 py-3 rounded font-semibold hover:opacity-90 text-center"
+                  dialogTitle="Sign up to book a consultation"
+                  dialogDescription="Create an account or sign in to book your consultation."
+                >
+                  Book Your Complete Analysis - {'\u20B9'}{price.toLocaleString()}
+                </AuthAction>
               </div>
             </div>
           </div>

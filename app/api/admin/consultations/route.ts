@@ -16,6 +16,9 @@ export async function GET(request: NextRequest) {
     }
 
     const consultations = await prisma.consultation.findMany({
+      where: {
+        email: { notIn: ["demo@user.com", "demo@admin.com"] },
+      },
       select: {
         id: true,
         name: true,

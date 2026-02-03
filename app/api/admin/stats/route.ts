@@ -14,15 +14,20 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const demoEmails = ["demo@user.com", "demo@admin.com"];
+    const consultationFilter = {
+      email: { notIn: demoEmails },
+    };
+
     const [totalUsers, totalConsultations, pendingPayments, completedConsultations] = await Promise.all([
       prisma.user.count(),
-      prisma.consultation.count(),
-      prisma.consultation.count({ where: { paymentStatus: "pending" } }),
-      prisma.consultation.count({ where: { paymentStatus: "completed" } }),
+      prisma.consultation.count({ where: consultationFilter }),
+      prisma.consultation.count({ where: { ...consultationFilter, paymentStatus: "pending" } }),
+      prisma.consultation.count({ where: { ...consultationFilter, paymentStatus: "completed" } }),
     ]);
 
     const completedConsultationsData = await prisma.consultation.findMany({
-      where: { paymentStatus: "completed" },
+      where: { ...consultationFilter, paymentStatus: "completed" },
       select: { price: true },
     });
 

@@ -1,6 +1,7 @@
 'use client';
 
 import AuthAction from '@/components/auth-action';
+import Link from 'next/link';
 
 export default function WhyChoose() {
   const reasons = [
@@ -72,9 +73,13 @@ export default function WhyChoose() {
       </div>
 
       {/* Chat Icon */}
-      <div className="fixed bottom-6 right-6 w-12 h-12 bg-accent rounded-full flex items-center justify-center cursor-pointer hover:shadow-cosmic transition-all shadow-cosmic">
-        <span className="text-white text-xl animate-cosmic-pulse">💬</span>
-      </div>
+      <Link
+        href="/contact"
+        className="fixed bottom-6 right-6 w-12 h-12 bg-accent rounded-full flex items-center justify-center cursor-pointer hover:shadow-cosmic transition-all shadow-cosmic"
+        aria-label="Contact us"
+      >
+        <span className="text-white text-xl animate-cosmic-pulse">{'\u{1F4AC}'}</span>
+      </Link>
     </section>
   );
 }
